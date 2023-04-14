@@ -13,6 +13,20 @@ main {
   background-color: #554971;
 }
 
+article {
+  border: 3px solid #ffffff55;
+  background-color: #665a81;
+}
+
+th, td {
+  color: #f8f9fa;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd)>* {
+  color: #f8f9fa;
+  background: #00000010;
+}
+
 .modal-content {
   background-color: #8f6d91;
 }

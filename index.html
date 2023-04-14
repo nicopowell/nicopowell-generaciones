@@ -33,8 +33,50 @@
             Agregar nueva persona
           </button>
         </section>
-        <hr class="" />
-        <section id="personas"></section>
+        <hr />
+        <section id="personas container-fluid">
+          <article class="col-12 col-md-6 col-lg-4 p-2 rounded-4">
+            <table class="table table-striped rounded-3">
+              <thead>
+                <tr>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">XXXXX</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">DNI</th>
+                  <td>XXXXX</td>
+                </tr>
+                <tr>
+                  <th scope="row">Fecha de nacimiento</th>
+                  <td>XXXXX</td>
+                </tr>
+                <tr>
+                  <th>Edad</th>
+                  <td>XXXXX</td>
+                </tr>
+                <tr>
+                  <th>Sexo</th>
+                  <td>XXXXX</td>
+                </tr>
+                <tr>
+                  <th>Peso</th>
+                  <td>XXXXX</td>
+                </tr>
+                <tr>
+                  <th>Altura</th>
+                  <td>XXXXX</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="d-flex justify-content-center pb-2">
+              <button class="btn btn-primary me-3">Mostrar generacion</button>
+              <button class="btn btn-primary ms-3">Mayor de edad</button>
+            </div>
+            
+          </article>
+        </section>
         <!-- Modal -->
         <section
           class="modal fade"
@@ -60,41 +102,55 @@
                 <form class="p-3">
                   <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" maxlength="35" required/>
+                    <input type="text" class="form-control" id="nombre" maxlength="35" required />
                   </div>
                   <div class="mb-3">
                     <label for="dni" class="form-label">DNI</label>
-                    <input type="number" class="form-control" id="dni" min="1" max="99999999" required/>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="dni"
+                      min="1"
+                      max="99999999"
+                      required
+                    />
                   </div>
                   <div class="mb-3">
                     <label for="nacimiento" class="form-label">Fecha de nacimiento</label>
-                    <input type="date" class="form-control" id="nacimiento" min="1930-01-01" max="2024-01-01" required/>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="nacimiento"
+                      min="1930-01-01"
+                      max="2024-01-01"
+                      required
+                    />
                   </div>
                   <div class="d-flex justify-content-between">
                     <div class="mb-3 me-3 w-100">
                       <label for="edad" class="form-label">Edad</label>
-                      <input type="number" class="form-control" id="edad" required/>
+                      <input type="number" class="form-control" id="edad" required />
                     </div>
                     <div class="mb-3 ms-3 w-100">
                       <label class="form-label" for="sexo">Sexo</label>
-                      <select class="form-select" aria-label="Default select example" required>
-                        <option value="1">Hombre</option>
-                        <option value="2">Mujer</option>
-                        <option value="3">No binario</option>
+                      <select class="form-select" id="sexo" required>
+                        <option value="Hombre">Hombre</option>
+                        <option value="Mujer">Mujer</option>
+                        <option value="No binario">No binario</option>
                       </select>
                     </div>
                   </div>
                   <div class="d-flex justify-content-between">
                     <div class="mb-3 me-3">
-                      <label for="peso" class="form-label">Peso</label>
-                      <input type="number" class="form-control" id="peso" />
+                      <label for="peso" class="form-label">Peso (Kg)</label>
+                      <input type="number" class="form-control" id="peso" step="0.1" />
                     </div>
                     <div class="mb-3 ms-3">
-                      <label for="altura" class="form-label">Altura</label>
+                      <label for="altura" class="form-label">Altura (Cm)</label>
                       <input type="number" class="form-control" id="altura" />
                     </div>
                   </div>
-                  <button type="submit" class="btn btn-primary w-100 mt-2">Agregar persona</button>  
+                  <button type="submit" class="btn btn-primary w-100 mt-2">Agregar persona</button>
                 </form>
               </div>
             </div>
