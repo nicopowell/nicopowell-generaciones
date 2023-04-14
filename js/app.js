@@ -20,15 +20,59 @@ function agregarPersona(e) {
 
     //Introducimos el objeto en un array
     personas.push(objetoPersona);
-
+    crearTabla(objetoPersona);
     //ocultar ventana modal
     ventanaModal.hide();
-    console.log(personas)
   }
   formulario.reset();
 }
 
-function crearTabla (){}
+function crearTabla(objetoPersona) {
+  let contenedorPersonas = document.getElementById("contenedorPersonas");
+  let nuevaTabla = document.createElement("div");
+  nuevaTabla.className = "p-2 col-12 col-md-6 col-lg-4";
+  nuevaTabla.innerHTML = `<article class=" p-3 rounded-4">
+  <table class="table table-striped rounded-3">
+    <thead>
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">${objetoPersona.nombre}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">DNI</th>
+        <td>${objetoPersona.dni}</td>
+      </tr>
+      <tr>
+        <th scope="row">Fecha de nacimiento</th>
+        <td>${objetoPersona.nacimiento}</td>
+      </tr>
+      <tr>
+        <th>Edad</th>
+        <td>${objetoPersona.edad}</td>
+      </tr>
+      <tr>
+        <th>Sexo</th>
+        <td>${objetoPersona.sexo}</td>
+      </tr>
+      <tr>
+        <th>Peso</th>
+        <td>${objetoPersona.peso}</td>
+      </tr>
+      <tr>
+        <th>Altura</th>
+        <td>${objetoPersona.altura}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-center pb-2">
+    <button class="btn btn-primary me-3">Mostrar generacion</button>
+    <button class="btn btn-primary ms-3">Mayor de edad</button>
+  </div>
+</article>`;
+  contenedorPersonas.appendChild(nuevaTabla);
+}
 
 class Persona {
   #nombre;
@@ -71,7 +115,7 @@ class Persona {
     return this.#dni;
   }
   set dni(nuevoDni) {
-    if (nuevoDni >= 10000000 && nuevoDni <= 99999999) {
+    if (nuevoDni >= 0 && nuevoDni <= 99999999) {
       this.#dni = nuevoDni;
     }
   }
@@ -86,7 +130,11 @@ class Persona {
   }
 
   get peso() {
-    return this.#peso;
+    if (!isNaN(this.#peso)) {
+      return this.#peso;
+    } else {
+      return "---";
+    }
   }
   set peso(nuevoPeso) {
     if (nuevoPeso > 0) {
@@ -95,7 +143,11 @@ class Persona {
   }
 
   get altura() {
-    return this.#altura;
+    if (!isNaN(this.#altura)) {
+      return this.#altura;
+    } else {
+      return "---";
+    }
   }
   set altura(nuevaAltura) {
     if (nuevaAltura > 0) {
