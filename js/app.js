@@ -1,12 +1,14 @@
 let formulario = document.querySelector("form");
 let ventanaModal = new bootstrap.Modal(document.getElementById("modalAgregarPersona"));
 let personas = [];
+let contadorPersonas = 1;
 
 formulario.addEventListener("submit", agregarPersona);
 
 function agregarPersona(e) {
   e.preventDefault();
   if (formulario.checkValidity()) {
+    let id = contadorPersonas;
     let nombre = document.getElementById("nombre").value;
     let dni = parseInt(document.getElementById("dni").value);
     let nacimiento = document.getElementById("nacimiento").value;
@@ -16,7 +18,9 @@ function agregarPersona(e) {
     let altura = parseInt(document.getElementById("altura").value);
 
     //Creamos el objeto de la persona
-    const objetoPersona = new Persona(nombre, edad, dni, sexo, peso, altura, nacimiento);
+    const objetoPersona = new Persona(id, nombre, edad, dni, sexo, peso, altura, nacimiento);
+
+    contadorPersonas++;
 
     //Introducimos el objeto en un array
     personas.push(objetoPersona);
@@ -67,14 +71,15 @@ function crearTabla(objetoPersona) {
     </tbody>
   </table>
   <div class="d-flex justify-content-center pb-2">
-    <button class="btn btn-primary me-3">Mostrar generacion</button>
-    <button class="btn btn-primary ms-3">Mayor de edad</button>
+    <button class="btn btn-primary me-3 btnMostrarGeneracion${objetoPersona.id}">Mostrar generacion</button>
+    <button class="btn btn-primary ms-3 btnMayorDeEdad${objetoPersona.id}}">Mayor de edad</button>
   </div>
 </article>`;
   contenedorPersonas.appendChild(nuevaTabla);
 }
 
 class Persona {
+  #id
   #nombre;
   #edad;
   #dni;
@@ -83,7 +88,8 @@ class Persona {
   #altura;
   #nacimiento;
 
-  constructor(nombre, edad, dni, sexo, peso, altura, nacimiento) {
+  constructor(id, nombre, edad, dni, sexo, peso, altura, nacimiento) {
+    this.#id = id;
     this.#nombre = nombre;
     this.#edad = edad;
     this.#dni = dni;
@@ -91,6 +97,13 @@ class Persona {
     this.#peso = peso;
     this.#altura = altura;
     this.#nacimiento = nacimiento;
+  }
+
+  get id() {
+    return this.#id;
+  }
+  set id(nuevoId) {
+    this.#id = nuevoId;
   }
 
   get nombre() {
