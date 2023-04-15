@@ -2,7 +2,7 @@ let formulario = document.querySelector("form");
 let ventanaModal = new bootstrap.Modal(document.getElementById("modalAgregarPersona"));
 let personas = [];
 let contadorPersonas = 1;
-let alert = document.getElementById('alert')
+let alert = document.getElementById("alert");
 
 formulario.addEventListener("submit", agregarPersona);
 
@@ -13,7 +13,7 @@ function agregarPersona(e) {
     let nombre = document.getElementById("nombre").value;
     let dni = parseInt(document.getElementById("dni").value);
     let nacimiento = convertirFecha(document.getElementById("nacimiento").value);
-    let edad = calcularEdad(nacimiento)
+    let edad = calcularEdad(nacimiento);
     let sexo = document.getElementById("sexo").value;
     let peso = parseFloat(document.getElementById("peso").value);
     let altura = parseInt(document.getElementById("altura").value);
@@ -118,8 +118,8 @@ function crearTabla(objetoPersona) {
 }
 
 function mostrarAlerta(mensaje) {
-  alert.className = "alert alert-primary"
-  alert.innerHTML = mensaje
+  alert.className = "alert alert-primary";
+  alert.innerHTML = mensaje;
 }
 
 class Persona {
@@ -233,28 +233,46 @@ class Persona {
   }
 
   mostrarGeneracion() {
-    console.log("ejecutando Mostrar Generacion");
     if (this.anio >= 1994 && this.anio <= 2010) {
-      mostrarAlerta(`${this.nombre} pertenece a la generación Z y su rasgo característico es la irreverencia`)
+      mostrarAlerta(
+        `${this.nombre} pertenece a la generación Z y su rasgo característico es la irreverencia`
+      );
     } else if (this.anio >= 1981 && this.anio <= 1993) {
-      mostrarAlerta(`${this.nombre} pertenece a la generación Y (Milennials) y su rasgo característico es la frustración`)
+      mostrarAlerta(
+        `${this.nombre} pertenece a la generación Y (Milennials) y su rasgo característico es la frustración`
+      );
     } else if (this.anio >= 1969 && this.anio <= 1980) {
-      mostrarAlerta(`${this.nombre} pertenece a la generación X y su rasgo característico es la obseción por el exito`)
+      mostrarAlerta(
+        `${this.nombre} pertenece a la generación X y su rasgo característico es la obseción por el exito`
+      );
     } else if (this.anio >= 1949 && this.anio <= 1968) {
-      mostrarAlerta(`${this.nombre} pertenece a la generación Baby Boom y su rasgo característico es la Ambición`)
+      mostrarAlerta(
+        `${this.nombre} pertenece a la generación Baby Boom y su rasgo característico es la Ambición`
+      );
     } else if (this.anio >= 1930 && this.anio <= 1948) {
-      mostrarAlerta(`${this.nombre} pertenece a la Silent Generation y su rasgo característico es la austeridad`)
+      mostrarAlerta(
+        `${this.nombre} pertenece a la Silent Generation y su rasgo característico es la austeridad`
+      );
     } else {
-      mostrarAlerta(`${this.nombre} no pertenece ninguna generación que coincida con sus datos`)
+      mostrarAlerta(`${this.nombre} no pertenece ninguna generación que coincida con sus datos`);
     }
   }
   esMayorDeEdad() {
-    console.log("ejecutando Mayor de edad");
-
     if (this.edad >= 18) {
-      mostrarAlerta(`${this.nombre} es mayor de edad`)
+      mostrarAlerta(`${this.nombre} es mayor de edad`);
     } else {
-      mostrarAlerta(`${this.nombre} no es mayor de edad`)
+      mostrarAlerta(`${this.nombre} no es mayor de edad`);
     }
+  }
+  mostrarDatos() {
+    console.log(`ID: ${this.id}`);
+    console.log(`Nombre: ${this.nombre}`);
+    console.log(`Fecha de nacimiento: ${this.nacimiento}`);
+    console.log(`Edad: ${this.edad}`);
+    console.log(`DNI: ${this.dni}`);
+    console.log(`Sexo: ${this.sexo}`);
+    console.log(`Peso: ${this.peso} Kg`);
+    console.log(`Altura: ${this.altura} cm`);
+    console.log(`Año de nacimiento: ${this.anio}`);
   }
 }
