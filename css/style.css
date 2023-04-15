@@ -13,9 +13,25 @@ main {
   background-color: #554971;
 }
 
+.btn-primary {
+  background-color: #b66700;
+  border: #b86e0d;
+  box-shadow: 5px 5px 5px #0003;
+}
+
+.btn-primary:hover {
+  background-color: #88520b;
+}
+
+.alert-primary{
+  background-color: #c4bed3;
+  box-shadow: 10px 15px 5px #0003;  
+}
+
 article {
   border: 3px solid #ffffff55;
   background-color: #665a81;
+  box-shadow: 10px 15px 5px #0003;
 }
 
 th, td {
