@@ -2,6 +2,7 @@ let formulario = document.querySelector("form");
 let ventanaModal = new bootstrap.Modal(document.getElementById("modalAgregarPersona"));
 let personas = [];
 let contadorPersonas = 1;
+let alert = document.getElementById('alert')
 
 formulario.addEventListener("submit", agregarPersona);
 
@@ -11,8 +12,8 @@ function agregarPersona(e) {
     let id = contadorPersonas;
     let nombre = document.getElementById("nombre").value;
     let dni = parseInt(document.getElementById("dni").value);
-    let nacimiento = document.getElementById("nacimiento").value;
-    let edad = parseInt(document.getElementById("edad").value);
+    let nacimiento = convertirFecha(document.getElementById("nacimiento").value);
+    let edad = calcularEdad(nacimiento)
     let sexo = document.getElementById("sexo").value;
     let peso = parseFloat(document.getElementById("peso").value);
     let altura = parseInt(document.getElementById("altura").value);
@@ -25,14 +26,51 @@ function agregarPersona(e) {
     //Introducimos el objeto en un array
     personas.push(objetoPersona);
     crearTabla(objetoPersona);
+
     //ocultar ventana modal
     ventanaModal.hide();
   }
   formulario.reset();
 }
 
+function convertirFecha(fecha) {
+  let partesFecha = fecha.split("-");
+  let nacimiento = partesFecha[2] + "-" + partesFecha[1] + "-" + partesFecha[0];
+  return nacimiento;
+}
+
+function calcularEdad(nacimiento) {
+  let fechaActual = new Date();
+  let anioActual = fechaActual.getFullYear();
+  let mesActual = fechaActual.getMonth() + 1;
+  let diaActual = fechaActual.getDate();
+  let fechaNac = nacimiento.split("-");
+  let anioNac = parseInt(fechaNac[2]);
+  let mesNac = parseInt(fechaNac[1]);
+  let diaNac = parseInt(fechaNac[0]);
+
+  let edad = anioActual - anioNac;
+
+  if (mesActual < mesNac || (mesActual == mesNac && diaActual < diaNac)) {
+    edad--;
+  }
+
+  return edad;
+}
+
 function crearTabla(objetoPersona) {
   let contenedorPersonas = document.getElementById("contenedorPersonas");
+
+  let btnMostrarGeneracion = document.createElement("button");
+  btnMostrarGeneracion.className = "btn btn-primary me-3";
+  btnMostrarGeneracion.innerHTML = "Mostrar generacion";
+  btnMostrarGeneracion.onclick = () => objetoPersona.mostrarGeneracion();
+
+  let btnMayorDeEdad = document.createElement("button");
+  btnMayorDeEdad.className = "btn btn-primary me-3";
+  btnMayorDeEdad.innerHTML = "Mayor de edad";
+  btnMayorDeEdad.onclick = () => objetoPersona.esMayorDeEdad();
+
   let nuevaTabla = document.createElement("div");
   nuevaTabla.className = "p-2 col-12 col-md-6 col-lg-4";
   nuevaTabla.innerHTML = `<article class=" p-3 rounded-4">
@@ -70,16 +108,22 @@ function crearTabla(objetoPersona) {
       </tr>
     </tbody>
   </table>
-  <div class="d-flex justify-content-center pb-2">
-    <button class="btn btn-primary me-3 btnMostrarGeneracion${objetoPersona.id}">Mostrar generacion</button>
-    <button class="btn btn-primary ms-3 btnMayorDeEdad${objetoPersona.id}}">Mayor de edad</button>
+  <div class="d-flex btnContainer justify-content-center pb-2">
   </div>
 </article>`;
+
+  nuevaTabla.querySelector(".btnContainer").appendChild(btnMostrarGeneracion);
+  nuevaTabla.querySelector(".btnContainer").appendChild(btnMayorDeEdad);
   contenedorPersonas.appendChild(nuevaTabla);
 }
 
+function mostrarAlerta(mensaje) {
+  alert.className = "alert alert-primary"
+  alert.innerHTML = mensaje
+}
+
 class Persona {
-  #id
+  #id;
   #nombre;
   #edad;
   #dni;
@@ -87,6 +131,7 @@ class Persona {
   #peso;
   #altura;
   #nacimiento;
+  #anio;
 
   constructor(id, nombre, edad, dni, sexo, peso, altura, nacimiento) {
     this.#id = id;
@@ -97,6 +142,7 @@ class Persona {
     this.#peso = peso;
     this.#altura = altura;
     this.#nacimiento = nacimiento;
+    this.#anio = parseInt(nacimiento.split("-")[2]);
   }
 
   get id() {
@@ -177,55 +223,38 @@ class Persona {
     }
   }
 
-  mostrarGeneracion() {
-    if (this.nacimiento >= 1994 && this.nacimiento <= 2010) {
-      document.write(
-        `<p>Esta persona al haber nacido en ${this.nacimiento} pertenece a la generación Z</p>`
-      );
-    } else if (this.nacimiento >= 1981 && this.nacimiento <= 1993) {
-      document.write(
-        `<p>Esta persona al haber nacido en ${this.nacimiento} pertenece a la generación Y o millenials</p>`
-      );
-    } else if (this.nacimiento >= 1969 && this.nacimiento <= 1980) {
-      document.write(
-        `<p>Esta persona al haber nacido en ${this.nacimiento} pertenece a la generación X</p>`
-      );
-    } else if (this.nacimiento >= 1949 && this.nacimiento <= 1968) {
-      document.write(
-        `<p>Esta persona al haber nacido en ${this.nacimiento} pertenece a la generación Baby Boom</p>`
-      );
-    } else if (this.nacimiento >= 1930 && this.nacimiento <= 1948) {
-      document.write(
-        `<p>Esta persona al haber nacido en ${this.nacimiento} pertenece a la Silent Generation</p>`
-      );
-    } else {
-      document.write(
-        `<p>Esta persona al haber nacido en ${this.nacimiento} no pertenece a ninguna generación en nuestra tabla</p>`
-      );
+  get anio() {
+    return this.#anio;
+  }
+  set anio(nuevoAnio) {
+    if (nuevoAnio > 1929 && nuevoAnio < 2025) {
+      this.#anio = nuevoAnio;
     }
-    document.write("<hr>");
+  }
+
+  mostrarGeneracion() {
+    console.log("ejecutando Mostrar Generacion");
+    if (this.anio >= 1994 && this.anio <= 2010) {
+      mostrarAlerta(`${this.nombre} pertenece a la generación Z y su rasgo característico es la irreverencia`)
+    } else if (this.anio >= 1981 && this.anio <= 1993) {
+      mostrarAlerta(`${this.nombre} pertenece a la generación Y (Milennials) y su rasgo característico es la frustración`)
+    } else if (this.anio >= 1969 && this.anio <= 1980) {
+      mostrarAlerta(`${this.nombre} pertenece a la generación X y su rasgo característico es la obseción por el exito`)
+    } else if (this.anio >= 1949 && this.anio <= 1968) {
+      mostrarAlerta(`${this.nombre} pertenece a la generación Baby Boom y su rasgo característico es la Ambición`)
+    } else if (this.anio >= 1930 && this.anio <= 1948) {
+      mostrarAlerta(`${this.nombre} pertenece a la Silent Generation y su rasgo característico es la austeridad`)
+    } else {
+      mostrarAlerta(`${this.nombre} no pertenece ninguna generación que coincida con sus datos`)
+    }
   }
   esMayorDeEdad() {
+    console.log("ejecutando Mayor de edad");
+
     if (this.edad >= 18) {
-      document.write(`<p>${this.nombre} es mayor de edad</p>`);
+      mostrarAlerta(`${this.nombre} es mayor de edad`)
     } else {
-      document.write(`<p>${this.nombre} es menor de edad</p>`);
+      mostrarAlerta(`${this.nombre} no es mayor de edad`)
     }
-    document.write("<hr>");
-  }
-  mostrarDatos() {
-    document.write(`<p>Nombre: ${this.nombre}</p>`);
-    document.write(`<p>Edad: ${this.edad}</p>`);
-    document.write(`<p>DNI: ${this.dni}</p>`);
-    document.write(`<p>Sexo: ${this.sexo}</p>`);
-    document.write(`<p>Peso: ${this.peso} Kg</p>`);
-    document.write(`<p>Altura: ${this.altura} cm</p>`);
-    document.write(`<p>Año de nacimiento: ${this.nacimiento}</p>`);
-    document.write("<hr>");
-  }
-  generaDNI() {
-    this.dni = Math.floor(Math.random() * (99999999 - 10000000 + 1) + 10000000);
-    document.write(`Se genero un DNI con valor de ${this.dni}`);
-    document.write("<hr>");
   }
 }
