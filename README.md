@@ -17,7 +17,7 @@ En este ejercicio nosotros introducimos los datos de una persona por medio de un
 En una terminal utilizar el siguiente comando
 
 ```
-git clone https://github.com/nicopowell/nicopowell-numero-magico.git
+git clone https://github.com/nicopowell/nicopowell-generaciones.git
 ```
 
 ## Autores
